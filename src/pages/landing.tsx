@@ -1,23 +1,56 @@
+'use client';
+import DownArrow from "@/Svg/DownArrow";
+import UpArrow from "@/Svg/UpArrow";
 import { NextPage } from "next";
 import Image from "next/image";
-import Logo from "../Svg/Logo";
+import { useState } from "react";
 import Calender from "../Svg/Calender";
-import RightArrow from "@/Svg/RightArrow";
-import ProfilePic from "@/Svg/ProfilePic";
+import Logo from "../Svg/Logo";
 import Rashmin from "../app/Rashmin.png";
-import UpArrow from "@/Svg/UpArrow";
-import DownArrow from "@/Svg/DownArrow";
 import Button from "./components/Button";
 import ScheduleList from "./components/ScheduleList";
-import p1 from "@/app/1.jpeg";
-import p2 from "@/app/2.png";
-import p3 from "@/app/3.jpeg";
-import p4 from "@/app/4.jpeg";
-import p5 from "@/app/5.png";
 
-interface Props {}
+type Props = {};
 
-const Landing: NextPage<Props> = ({}) => {
+const Landing: NextPage<Props> = ({ }) => {
+  const [name, setName] = useState('');
+  const [whatsAppNumber, setWhatsAppNumber] = useState('');
+  const [city, setCity] = useState('');
+  const [hasDoneCourse, setHasDoneCourse] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [whatsAppNumberError, setWhatsAppNumberError] = useState('');
+  const [cityError, setCityError] = useState('');
+  const [hasDoneCourseError, setHasDoneCourseError] = useState('');
+
+
+  const handleSubmit = () => {
+    console.log({ name, whatsAppNumber, city, hasDoneCourse });
+    if (validate()) {
+      //TODO: add make
+    }
+  }
+
+  const validate = () => {
+    let status = true;
+    if (name === "") {
+      setNameError("*required field");
+      status = false;
+    }
+    if (whatsAppNumber === "") {
+      setWhatsAppNumberError("*required field");
+      status = false;
+    }
+    if (city === "") {
+      setCityError("*required field");
+      status = false;
+    }
+    if (hasDoneCourse === "") {
+      setHasDoneCourseError("*required field");
+      status = false;
+    }
+    return status;
+  };
+
   return (
     <div className="w-full grid place-items-center">
       {/* top-design */}
@@ -45,19 +78,25 @@ const Landing: NextPage<Props> = ({}) => {
           </div>
         </div>
         {/* form-start */}
-        <form className="flex flex-col justify-center items-center space-y-4 mt-[20px]">
+        <div className="flex flex-col justify-center items-center space-y-4 mt-[20px]">
           <div className="flex flex-col w-[330px] ">
             <label className="text-sm mb-1 opacity-80" htmlFor="">
               Name
             </label>
             <input
-              className="border border-gray-200 rounded
-               h-[42px]"
+              className="border border-gray-200 rounded h-[42px] p-2"
               type="text"
-              name=""
-              id=""
-              placeholder="  Enter"
+              name="name"
+              id="name"
+              placeholder="  Enter Name"
+              value={name}
+              onChange={e => setName(e.target.value)}
             />
+            {nameError && (
+              <div className="xl:text-sm text-xs text-red-500">
+                {nameError}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col w-[330px]">
@@ -65,24 +104,39 @@ const Landing: NextPage<Props> = ({}) => {
               WhatsApp Number
             </label>
             <input
-              className=" h-[42px] border border-gray-200 rounded"
-              type="text"
-              name=""
-              id=""
-              placeholder="  Enter"
+              className=" h-[42px] border border-gray-200 rounded p-2"
+              name="whatsAppNumber"
+              id="whatsAppNumber"
+              placeholder="  Enter WhatsApp Number"
+              value={whatsAppNumber}
+              onChange={e => setWhatsAppNumber(e.target.value)}
             />
+            {whatsAppNumberError && (
+              <div className="xl:text-sm text-xs text-red-500">
+                {whatsAppNumberError}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col w-[330px]">
             <label className="mb-1 opacity-80" htmlFor="city">
               City
             </label>
-            <select className=" h-[42px] border rounded" name="city" id="city">
-              <option value="new-york">New York</option>
-              <option value="los-angeles">Los Angeles</option>
-              <option value="chicago">Chicago</option>
-              <option value="miami">Miami</option>
+            <select className="h-[42px] border rounded"
+              name="city"
+              id="city"
+              value={city}
+              onChange={e => setCity(e.target.value)}>
+              <option value="" disabled selected>Select a City</option>
+              <option value="pune">Pune</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="other">Other</option>
             </select>
+            {cityError && (
+              <div className="xl:text-sm text-xs text-red-500">
+                {cityError}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col w-[330px]">
@@ -90,18 +144,24 @@ const Landing: NextPage<Props> = ({}) => {
               Have you done Art of Living Course?
             </label>
             <select
-              className=" h-[42px] border border-gray-200 rounded
-            "
+              className=" h-[42px] border border-gray-200 rounded"
               name="ArtOfLiving"
               id="ArtOfLiving"
+              value={hasDoneCourse}
+              onChange={e => setHasDoneCourse(e.target.value)}
             >
+              <option value="" disabled selected>Select an option</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
+            {hasDoneCourseError && (
+              <div className="xl:text-sm text-xs text-red-500">
+                {hasDoneCourseError}
+              </div>
+            )}
           </div>
-
-          <Button />
-        </form>
+          <Button onClick={handleSubmit} />
+        </div>
       </div>
 
       <div
@@ -185,7 +245,7 @@ const Landing: NextPage<Props> = ({}) => {
           <li>Multiple accommodation options available</li>
         </ul>
         <div className="w-full flex justify-center my-5">
-          <Button />
+          <Button onClick={handleSubmit} />
         </div>
       </div>
 
@@ -235,28 +295,54 @@ const Landing: NextPage<Props> = ({}) => {
               ]}
             />
           </div>
-          
         </div>
       </div>
 
       <div className="w-[390px]  bg-primary h-[740px]">
         <div className="text-center  my-8">
-            <Button />
-          </div>
+          <Button onClick={handleSubmit} />
+        </div>
         <h2 className="text-secondary text-center text-4xl font-bold">
           Photo Gallery
         </h2>
-        <div className="w-full relative px-4 "><Image className="object-cover object-center h-[250px] w-[250px]  absolute top-[200px] left-[0px] rounded-full z-[5]" src={p1} width={250} height={250} alt=""/>
-      <Image className="object-cover h-[200px] z-[1] w-[200px] rounded-full absolute top-[50px]" src={p2} width={250} height={250} alt=""/>
-      <Image className="object-cover h-[195px] z-[2] w-[195px] rounded-full absolute top-[80px] left-[135px]" src={p3} width={250} height={250} alt=""/>
-      <Image className="object-cover h-[190px] z-[3] w-[190px] rounded-full absolute top-[210px] left-[200px]" src={p4} width={250} height={250} alt=""/>
-      <Image className="object-cover h-[190px] z-[4] w-[190px] rounded-full absolute top-[360px] left-[160px]"  src={p5} width={250} height={250} alt=""/>
-      
+        <div className="w-full relative px-4 ">
+          <Image
+            className="object-cover object-center h-[250px] w-[250px]  absolute top-[200px] left-[0px] rounded-full z-[5]"
+            src={'/2.png'}
+            width={250}
+            height={250}
+            alt=""
+          />
+          <Image
+            className="object-cover h-[200px] z-[1] w-[200px] rounded-full absolute top-[50px]"
+            src={'/2.png'}
+            width={250}
+            height={250}
+            alt=""
+          />
+          <Image
+            className="object-cover h-[195px] z-[2] w-[195px] rounded-full absolute top-[80px] left-[135px]"
+            src={'/3.jpeg'}
+            width={250}
+            height={250}
+            alt=""
+          />
+          <Image
+            className="object-cover h-[190px] z-[3] w-[190px] rounded-full absolute top-[210px] left-[200px]"
+            src={'/4.jpeg'}
+            width={250}
+            height={250}
+            alt=""
+          />
+          <Image
+            className="object-cover h-[190px] z-[4] w-[190px] rounded-full absolute top-[360px] left-[160px]"
+            src={'/5.png'}
+            width={250}
+            height={250}
+            alt=""
+          />
+        </div>
       </div>
-      </div>
-
-     
-    
     </div>
   );
 };
