@@ -27,9 +27,11 @@ const Landing: NextPage<Props> = ({}) => {
             <Logo />
           </div>
           <div className="font-normal text-lg ">Residential</div>
-          <div className="text-secondary font-bold  text-center my-2">
+          <div className="text-secondary font-bold relative text-center z-[2] my-2">
+            {/* <div className="w-[162px] bg-primary-2 rounded-full z-[-1] top-[0] h-[162px] absolute"></div> */}
             <span className="text-[46px] leading-[50px]">Happiness </span>{" "}
             <span className="text-[46px]">Program</span>
+            {/* <div className="w-[60px] bg-primary-2 rounded-full z-[] h-[60px] absolute"></div> */}
           </div>
           <div className="border border-t-secondary border-b-secondary border-l-transparent border-r-transparent px-1 my-[16px]">
             at{" "}
@@ -57,6 +59,7 @@ const Landing: NextPage<Props> = ({}) => {
               name=""
               id=""
               placeholder="  Enter"
+              required
             />
           </div>
 
@@ -70,6 +73,7 @@ const Landing: NextPage<Props> = ({}) => {
               name=""
               id=""
               placeholder="  Enter"
+              required
             />
           </div>
 
@@ -95,8 +99,8 @@ const Landing: NextPage<Props> = ({}) => {
               name="ArtOfLiving"
               id="ArtOfLiving"
             >
-              <option value="Yes">Yes</option>
               <option value="No">No</option>
+              <option value="Yes">Yes</option>
             </select>
           </div>
 
